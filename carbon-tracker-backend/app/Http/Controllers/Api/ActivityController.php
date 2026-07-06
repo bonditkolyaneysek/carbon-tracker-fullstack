@@ -89,7 +89,7 @@ class ActivityController extends Controller
         }
 
         try {
-            $response = Http::timeout(5)->post('https://carbon-tracker-ml-service-production.up.railway.app/predict', [
+            $response = Http::timeout(5)->post('https://lucky-grace-production-13c0.up.railway.app/', [
                 'energy_usage_kwh_day' => $dailyKwh,
                 'transportation_distance_km' => $distanceKm,
                 'plastic_usage_kg' => $plasticKg,
