@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:8000/api',
+  baseURL: 'https://carbon-tracker-fullstack-production.up.railway.app/api',
   headers: {
     'Accept': 'application/json',
   },
