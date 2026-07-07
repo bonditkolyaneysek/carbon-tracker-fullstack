@@ -93,7 +93,7 @@ class ActivityController extends Controller
                 'energy_usage_kwh_day' => $dailyKwh,
                 'transportation_distance_km' => $distanceKm,
                 'plastic_usage_kg' => $plasticKg,
-            ]);
+            ]);y
 
             $result = $response->json();
 
