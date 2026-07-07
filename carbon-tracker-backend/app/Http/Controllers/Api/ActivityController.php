@@ -89,14 +89,14 @@ class ActivityController extends Controller
         }
 
         try {
-            $response = Http::timeout(5)->post('https://lucky-grace-production-13c0.up.railway.app/', [
+            $response = Http::timeout(5)->post('https://lucky-grace-production-13c0.up.railway.app/predict', [
                 'energy_usage_kwh_day' => $dailyKwh,
                 'transportation_distance_km' => $distanceKm,
                 'plastic_usage_kg' => $plasticKg,
-            ]);y
+            ]);
 
             $result = $response->json();
-
+            
             if (!$result || $result['prediction'] === null) {
                 // ML service reachable but failed internally — use direct sum fallback
                 $result = [
