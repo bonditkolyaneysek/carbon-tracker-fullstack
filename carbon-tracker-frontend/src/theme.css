@@ -202,3 +202,82 @@ hr {
   margin-bottom: 24px;
 }
 .notice-banner strong { color: #BFDBFE; }
+
+/* ---- Responsive adjustments (mobile & tablet) ---- */
+@media (max-width: 900px) {
+  .app-shell {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 12px 16px;
+  }
+
+  .sidebar-brand {
+    margin-bottom: 0;
+    margin-right: 16px;
+  }
+
+  .sidebar-logged-in {
+    display: none;
+  }
+
+  .sidebar-section-label {
+    display: none;
+  }
+
+  .sidebar-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .sidebar-nav a {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  .nav-dot {
+    display: none;
+  }
+
+  .sidebar-logout {
+    margin-top: 0;
+    margin-left: auto;
+  }
+
+  .main-content {
+    padding: 20px;
+  }
+
+  .metric-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 500px) {
+  .main-content {
+    padding: 16px;
+  }
+
+  .metric-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tab-row {
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .data-table {
+    font-size: 12px;
+  }
+
+  h1 {
+    font-size: 24px !important;
+  }
+}

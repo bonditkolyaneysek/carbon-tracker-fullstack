@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
 import Layout from '../components/Layout';
-import { PieChart, Pie, Cell, Tooltip, Legend, BarChart, Bar, XAxis, YAxis } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 
 export default function Dashboard() {
   const [user, setUser] = useState(null);
@@ -67,27 +67,31 @@ export default function Dashboard() {
         <div style={{ width: 340, flexShrink: 0, overflow: 'hidden' }}>
             <h2 style={{ fontSize: 22, marginBottom: 20 }}>Emission Contribution by Category</h2>
             {pieData.length > 0 ? (
-            <PieChart width={340} height={340}>
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
                 <Pie data={pieData} dataKey="value" nameKey="name" innerRadius={70} outerRadius={120} paddingAngle={2}>
                 {pieData.map((_, i) => <Cell key={i} fill={pieColors[i]} />)}
                 </Pie>
                 <Tooltip />
                 <Legend layout="horizontal" verticalAlign="bottom" align="center" />
-            </PieChart>
+              </PieChart>
+            </ResponsiveContainer>
             ) : <p style={{ color: 'var(--text-muted)' }}>No data yet — log an activity to see this chart.</p>}
         </div>
 
         <div style={{ width: 420, flexShrink: 0, overflow: 'hidden' }}>
             <h2 style={{ fontSize: 22, marginBottom: 20 }}>Daily Carbon Accumulation Log</h2>
             {barData.length > 0 ? (
-            <BarChart width={420} height={340} data={barData}>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart>
                 <XAxis dataKey="date" tick={{ fontSize: 11, fill: 'var(--text-muted)' }} />
                 <YAxis tick={{ fill: 'var(--text-muted)' }} label={{ value: 'CO2 (kg)', angle: -90, position: 'insideLeft', fill: 'var(--text-muted)' }} />
                 <Tooltip />
                 <Bar dataKey="co2">
                 {barData.map((d, i) => <Cell key={i} fill={barColor(d.category)} />)}
                 </Bar>
-            </BarChart>
+              </BarChart>
+            </ResponsiveContainer>
             ) : <p style={{ color: 'var(--text-muted)' }}>No activity history yet.</p>}
         </div>
     </div>
