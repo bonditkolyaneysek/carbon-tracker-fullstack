@@ -19,7 +19,11 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['https://appealing-analysis-production-3974.up.railway.app'],
+    'allowed_origins' => [
+        'https://appealing-analysis-production-3974.up.railway.app',
+        'http://localhost:3000',
+        'http://localhost:3001',
+    ],
 
     'allowed_origins_patterns' => [],
 
