@@ -43,7 +43,7 @@ export default function Dashboard() {
         Overview of calculated emissions, trends, and future predictive intelligence.
       </p>
 
-      <div style={{ display: 'flex', gap: 60, marginTop: 32 }}>
+      <div className="metric-grid" style={{ marginTop: 32 }}>
         <div>
           <div className="metric-label">Total Carbon Footprint</div>
           <div className="metric-value">{total.toFixed(2)} kg CO₂e</div>
@@ -63,7 +63,7 @@ export default function Dashboard() {
 
       <hr />
 
-      <div style={{ display: 'flex', gap: 80, flexWrap: 'wrap', alignItems: 'flex-start' }}>
+      <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
         <div style={{ width: 340, flexShrink: 0, overflow: 'hidden' }}>
             <h2 style={{ fontSize: 22, marginBottom: 20 }}>Emission Contribution by Category</h2>
             {pieData.length > 0 ? (

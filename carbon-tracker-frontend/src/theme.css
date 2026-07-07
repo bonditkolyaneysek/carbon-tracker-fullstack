@@ -291,4 +291,8 @@ hr {
   h1 {
     font-size: 24px !important;
   }
+
+  .metric-grid {
+    gap: 12px;
+  }
 }
