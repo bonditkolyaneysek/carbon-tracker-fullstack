@@ -79,10 +79,10 @@ export default function Dashboard() {
             ) : <p style={{ color: 'var(--text-muted)' }}>No data yet — log an activity to see this chart.</p>}
         </div>
 
-        <div style={{ width: 420, flexShrink: 0, overflow: 'hidden' }}>
+        <div style={{ width: 360, flexShrink: 0, overflow: 'hidden' }}>
             <h2 style={{ fontSize: 22, marginBottom: 20 }}>Daily Carbon Accumulation Log</h2>
             {barData.length > 0 ? (
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={240}>
               <BarChart data={barData}>
                 <XAxis dataKey="date" tick={{ fontSize: 11, fill: 'var(--text-muted)' }} />
                 <YAxis tick={{ fill: 'var(--text-muted)' }} label={{ value: 'CO2 (kg)', angle: -90, position: 'insideLeft', fill: 'var(--text-muted)' }} />
