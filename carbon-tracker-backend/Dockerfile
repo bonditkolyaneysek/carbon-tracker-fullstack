@@ -1,4 +1,4 @@
-
+Dockerfile: FROM php:8.5-fpm
 
 RUN apt-get update && apt-get install -y \
     libpng-dev libonig-dev libxml2-dev zip unzip git curl
@@ -15,4 +15,4 @@ RUN composer install --optimize-autoloader --no-dev
 
 EXPOSE 8000
 
-CMD php artisan serve --host=0.0.0.0 --port=$PORT
+CMD php artisan serve --host=0.0.0.0 --port=${PORT:-8000}
