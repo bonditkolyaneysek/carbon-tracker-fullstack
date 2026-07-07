@@ -83,7 +83,7 @@ export default function Dashboard() {
             <h2 style={{ fontSize: 22, marginBottom: 20 }}>Daily Carbon Accumulation Log</h2>
             {barData.length > 0 ? (
             <ResponsiveContainer width="100%" height={300}>
-              <BarChart>
+              <BarChart data={barData}>
                 <XAxis dataKey="date" tick={{ fontSize: 11, fill: 'var(--text-muted)' }} />
                 <YAxis tick={{ fill: 'var(--text-muted)' }} label={{ value: 'CO2 (kg)', angle: -90, position: 'insideLeft', fill: 'var(--text-muted)' }} />
                 <Tooltip />
