@@ -27,21 +27,22 @@ export default function Leaderboard() {
         </div>
       )}
 
-      <table className="data-table">
-        <thead>
-          <tr><th>Rank</th><th>User Name</th><th>EcoScore</th></tr>
-        </thead>
-        <tbody>
-          {data.leaderboard.map((u, i) => (
-            <tr key={u.id}>
-              <td>{i + 1}</td>
-              <td>{u.name}</td>
-              <td>{u.eco_score}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
+      <div style={{ overflowX: 'auto', width: '100%' }}>
+        <table className="data-table">
+          <thead>
+            <tr><th>Rank</th><th>User Name</th><th>EcoScore</th></tr>
+          </thead>
+          <tbody>
+            {data.leaderboard.map((u, i) => (
+              <tr key={u.id}>
+                <td>{i + 1}</td>
+                <td>{u.name}</td>
+                <td>{u.eco_score}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       <p style={{ marginTop: 20, color: 'var(--text-muted)' }}>
         Your rank: #{data.your_rank} — Score: {data.your_score}
       </p>

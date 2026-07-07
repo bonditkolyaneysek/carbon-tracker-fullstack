@@ -149,32 +149,33 @@ export default function ActivityForm() {
             </button>
         )}
         </div>
-
-        <table className="data-table">
-        <thead>
-            <tr><th>Date</th><th>Category</th><th>Subtype</th><th>Distance/Qty</th><th>CO2 (kg)</th><th></th></tr>
-        </thead>
-        <tbody>
-            {logs.map((log) => (
-            <tr key={log.id}>
-                <td>{log.activity_date}</td>
-                <td style={{ textTransform: 'capitalize' }}>{log.type}</td>
-                <td>{log.transport_mode || (log.type === 'electricity' ? 'Grid Power' : 'Single-use Items')}</td>
-                <td>{log.transport_distance_km ?? log.plastic_items ?? '—'}</td>
-                <td>{log.carbon_emitted}</td>
-                <td>
-                <button
-                    onClick={() => deleteOne(log.id)}
-                    style={{ background: 'none', border: 'none', color: 'var(--clay)', cursor: 'pointer', fontSize: 16 }}
-                    title="Delete this record"
-                >
-                    🗑
-                </button>
-                </td>
-            </tr>
-            ))}
-        </tbody>
-        </table>
+        <div style={{ overflowX: 'auto', width: '100%' }}>
+          <table className="data-table">
+          <thead>
+              <tr><th>Date</th><th>Category</th><th>Subtype</th><th>Distance/Qty</th><th>CO2 (kg)</th><th></th></tr>
+          </thead>
+          <tbody>
+              {logs.map((log) => (
+              <tr key={log.id}>
+                  <td>{log.activity_date}</td>
+                  <td style={{ textTransform: 'capitalize' }}>{log.type}</td>
+                  <td>{log.transport_mode || (log.type === 'electricity' ? 'Grid Power' : 'Single-use Items')}</td>
+                  <td>{log.transport_distance_km ?? log.plastic_items ?? '—'}</td>
+                  <td>{log.carbon_emitted}</td>
+                  <td>
+                  <button
+                      onClick={() => deleteOne(log.id)}
+                      style={{ background: 'none', border: 'none', color: 'var(--clay)', cursor: 'pointer', fontSize: 16 }}
+                      title="Delete this record"
+                  >
+                      🗑
+                  </button>
+                  </td>
+              </tr>
+              ))}
+          </tbody>
+          </table>
+        </div>
     </Layout>
   );
 }
