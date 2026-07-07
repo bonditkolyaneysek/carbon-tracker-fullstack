@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['https://carbon-tracker-frontend-production.up.railway.app'],
+    'allowed_origins' => ['https://appealing-analysis-production-3974.up.railway.app'],
 
     'allowed_origins_patterns' => [],
 
