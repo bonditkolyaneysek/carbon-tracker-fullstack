@@ -8,7 +8,6 @@ export default function Chatbot() {
   ]);
   const [input, setInput] = useState('');
   const bottomRef = useRef(null);
-
   useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [messages]);
 
   const send = async (e) => {
@@ -31,8 +30,7 @@ export default function Chatbot() {
       <p style={{ color: 'var(--text-muted)', marginTop: 12, fontSize: 16, marginBottom: 32 }}>
         Ask about electricity, transport, plastic, your eco score, or how to reduce your footprint.
       </p>
-
-      <div style={{ minHeight: 300 }}>
+      <div style={{ minHeight: 300, paddingBottom: 90 }}>
         {messages.map((m, i) => (
           <div key={i} className="chat-bubble" style={{ flexDirection: m.from === 'user' ? 'row-reverse' : 'row' }}>
             <div className="chat-avatar" style={{ background: m.from === 'bot' ? '#E0A458' : '#3B82F6' }}>
@@ -43,16 +41,27 @@ export default function Chatbot() {
         ))}
         <div ref={bottomRef} />
       </div>
-
-      <form onSubmit={send} style={{ position: 'fixed', bottom: 32, left: 280, right: 56, display: 'flex', gap: 10 }}>
+      <form
+        onSubmit={send}
+        style={{
+          position: 'fixed',
+          bottom: 16,
+          left: 16,
+          right: 16,
+          display: 'flex',
+          gap: 10,
+          maxWidth: 900,
+          margin: '0 auto',
+        }}
+      >
         <input
           className="input"
-          style={{ marginBottom: 0 }}
+          style={{ marginBottom: 0, flex: 1, minWidth: 0, fontSize: 16, height: 48, padding: '0 16px' }}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Ask how to lower your footprint..."
         />
-        <button type="submit" className="stepper-btn" style={{ width: 48, height: 48 }}>↑</button>
+        <button type="submit" className="stepper-btn" style={{ width: 48, height: 48, flexShrink: 0 }}>↑</button>
       </form>
     </Layout>
   );
