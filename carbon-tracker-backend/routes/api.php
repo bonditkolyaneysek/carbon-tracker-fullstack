@@ -17,6 +17,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+    Route::delete('/user', [AuthController::class, 'deleteAccount']);
 
     Route::delete('/activities/all', [ActivityController::class, 'destroyAll']);
     Route::apiResource('activities', ActivityController::class)->only(['index', 'store', 'destroy']);
