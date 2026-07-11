@@ -30,4 +30,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/stats/averages', [StatsController::class, 'averages']);
     Route::get('/stats/breakdown', [StatsController::class, 'breakdown']);
     Route::post('/chatbot', [ChatbotController::class, 'chat']);
+    Route::get('/daily-totals', [ActivityController::class, 'dailyTotals']);
 });

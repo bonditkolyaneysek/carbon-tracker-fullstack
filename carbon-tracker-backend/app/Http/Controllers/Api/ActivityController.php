@@ -122,4 +122,15 @@ class ActivityController extends Controller
 
         return response()->json(['message' => "Deleted {$count} activities."]);
     }
+
+    public function dailyTotals(Request $request)
+    {
+        $totals = $request->user()->activities()
+            ->selectRaw('activity_date, SUM(carbon_emitted) as total_co2')
+            ->groupBy('activity_date')
+            ->orderByDesc('activity_date')
+            ->get();
+
+        return response()->json($totals);
+    }
 }
