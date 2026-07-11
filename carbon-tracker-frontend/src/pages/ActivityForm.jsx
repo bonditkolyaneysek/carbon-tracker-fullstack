@@ -5,7 +5,6 @@ import NumberStepper from '../components/NumberStepper';
 import { Car, Zap, ShoppingBag } from 'lucide-react';
 import { Calculator } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { LayoutDashboard } from 'lucide-react';
 import { LayoutDashboard, History } from 'lucide-react';
 
 const TABS = [

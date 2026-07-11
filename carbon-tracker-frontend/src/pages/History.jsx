@@ -31,6 +31,9 @@ export default function History() {
   return (
     <Layout>
       <h1 style={{ fontSize: 34 }}>Activity History</h1>
+        <p style={{ color: 'var(--text-muted)', marginTop: 12, fontSize: 16, marginBottom: 28 }}>
+        Your daily totals and full activity log, all in one place.
+        </p>
       <h2 style={{ fontSize: 22, marginBottom: 16 }}>Daily Total Emissions</h2>
         <table className="data-table" style={{ marginBottom: 40 }}>
         <thead>
