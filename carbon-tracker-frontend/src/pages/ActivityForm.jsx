@@ -1,12 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import api from '../api';
 import Layout from '../components/Layout';
 import NumberStepper from '../components/NumberStepper';
+import { Car, Zap, ShoppingBag } from 'lucide-react';
+import { Calculator } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { LayoutDashboard } from 'lucide-react';
 
 const TABS = [
-  { key: 'transport', icon: '🚗', label: 'Transport Log' },
-  { key: 'electricity', icon: '⚡', label: 'Electricity Metrics' },
-  { key: 'plastic', icon: '🛍️', label: 'Plastic Waste' },
+  { key: 'transport', icon: <Car />, label: 'Transport Log' },
+  { key: 'electricity', icon: <Zap />, label: 'Electricity Metrics' },
+  { key: 'plastic', icon: <ShoppingBag />, label: 'Plastic Waste' },
 ];
 
 export default function ActivityForm() {
@@ -17,27 +21,13 @@ export default function ActivityForm() {
   const [billRiel, setBillRiel] = useState('50000');
   const [plasticItems, setPlasticItems] = useState('5');
   const [activityDate] = useState(new Date().toISOString().slice(0, 10));
-  const [logs, setLogs] = useState([]);
   const [error, setError] = useState('');
-
-  const loadLogs = () => api.get('/activities').then((res) => setLogs(res.data.slice(0, 6)));
-  const deleteOne = async (id) => {
-    await api.delete(`/activities/${id}`);
-    loadLogs();
-  };
-
-  const deleteAll = async () => {
-    if (!window.confirm('Delete all logged activities? This cannot be undone.')) return;
-    await api.delete('/activities/all');
-    loadLogs();
-  };
-  useEffect(() => { loadLogs(); }, []);
+  const navigate = useNavigate();
 
   const submit = async (payload) => {
     setError('');
     try {
       await api.post('/activities', payload);
-      loadLogs();
     } catch (err) {
       setError(err.response?.data?.message || 'Something went wrong.');
     }
@@ -45,7 +35,9 @@ export default function ActivityForm() {
 
   return (
     <Layout>
-      <h1 style={{ fontSize: 34 }}>📝 Activity Carbon Tracker &amp; Calculator</h1>
+      <h1 style={{ fontSize: 34, display: 'flex', alignItems: 'center', gap: 12 }}>
+        <Calculator size={30} /> Activity Carbon Tracker &amp; Calculator
+      </h1>
       <p style={{ color: 'var(--text-muted)', marginTop: 12, fontSize: 16 }}>
         Input daily parameters to compute instantaneous carbon offsets/emissions.
       </p>
@@ -141,41 +133,35 @@ export default function ActivityForm() {
 
       <hr />
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-        <h2 style={{ fontSize: 24 }}>Recent Simulated Database Logs</h2>
-        {logs.length > 0 && (
-            <button className="btn-block" style={{ width: 'auto', padding: '8px 16px', color: 'var(--clay)', borderColor: 'var(--clay)' }} onClick={deleteAll}>
-            🗑 Delete All
-            </button>
-        )}
-        </div>
-        <div style={{ overflowX: 'auto', width: '100%' }}>
-          <table className="data-table">
-          <thead>
-              <tr><th>Date</th><th>Category</th><th>Subtype</th><th>Distance/Qty</th><th>CO2 (kg)</th><th></th></tr>
-          </thead>
-          <tbody>
-              {logs.map((log) => (
-              <tr key={log.id}>
-                  <td>{log.activity_date}</td>
-                  <td style={{ textTransform: 'capitalize' }}>{log.type}</td>
-                  <td>{log.transport_mode || (log.type === 'electricity' ? 'Grid Power' : 'Single-use Items')}</td>
-                  <td>{log.transport_distance_km ?? log.plastic_items ?? '—'}</td>
-                  <td>{log.carbon_emitted}</td>
-                  <td>
-                  <button
-                      onClick={() => deleteOne(log.id)}
-                      style={{ background: 'none', border: 'none', color: 'var(--clay)', cursor: 'pointer', fontSize: 16 }}
-                      title="Delete this record"
-                  >
-                      🗑
-                  </button>
-                  </td>
-              </tr>
-              ))}
-          </tbody>
-          </table>
-        </div>
+      <h2 style={{ fontSize: 22, marginBottom: 16 }}>Current Input Summary</h2>
+      <table className="data-table">
+        <thead>
+          <tr><th>Field</th><th>Value</th></tr>
+        </thead>
+        <tbody>
+          {activeTab === 'transport' && (
+            <>
+              <tr><td>Vehicle Category</td><td>{transportMode}</td></tr>
+              <tr><td>Fuel Type</td><td>{transportFuel}</td></tr>
+              <tr><td>Distance (km)</td><td>{distanceKm}</td></tr>
+            </>
+          )}
+          {activeTab === 'electricity' && (
+            <tr><td>Monthly Bill (Riel)</td><td>{billRiel}</td></tr>
+          )}
+          {activeTab === 'plastic' && (
+            <tr><td>Single-use Items</td><td>{plasticItems}</td></tr>
+          )}
+        </tbody>
+      </table>
+
+      <button
+        className="btn-block"
+        style={{ marginTop: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}
+        onClick={() => navigate('/dashboard')}
+      >
+        <LayoutDashboard size={16} /> View Executive Carbon Dashboard
+      </button>
     </Layout>
   );
 }

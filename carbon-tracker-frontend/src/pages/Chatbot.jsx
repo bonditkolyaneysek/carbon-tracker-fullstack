@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import api from '../api';
 import Layout from '../components/Layout';
+import { Bot, User } from 'lucide-react';
 
 export default function Chatbot() {
   const [messages, setMessages] = useState([
@@ -26,15 +27,26 @@ export default function Chatbot() {
 
   return (
     <Layout>
-      <h1 style={{ fontSize: 34 }}>🤖 EcoBot Assistant Engine</h1>
+      <h1 style={{ fontSize: 42, display: 'flex', alignItems: 'center', gap: 14 }}>
+        <Bot size={38} /> EcoBot Assistant Engine
+      </h1>
       <p style={{ color: 'var(--text-muted)', marginTop: 12, fontSize: 16, marginBottom: 32 }}>
         Ask about electricity, transport, plastic, your eco score, or how to reduce your footprint.
       </p>
       <div style={{ minHeight: 300, paddingBottom: 90 }}>
         {messages.map((m, i) => (
           <div key={i} className="chat-bubble" style={{ flexDirection: m.from === 'user' ? 'row-reverse' : 'row' }}>
-            <div className="chat-avatar" style={{ background: m.from === 'bot' ? '#E0A458' : '#3B82F6' }}>
-              {m.from === 'bot' ? '🤖' : '🙂'}
+            <div
+              className="chat-avatar"
+              style={{
+                background: m.from === 'bot' ? '#E0A458' : '#3B82F6',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#fff',
+              }}
+            >
+              {m.from === 'bot' ? <Bot size={18} /> : <User size={18} />}
             </div>
             <div className="chat-bubble-text">{m.text}</div>
           </div>

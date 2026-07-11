@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import api from '../api';
 import Layout from '../components/Layout';
+import { Trophy } from 'lucide-react';
 
 export default function Leaderboard() {
   const [data, setData] = useState(null);
@@ -15,7 +16,9 @@ export default function Leaderboard() {
 
   return (
     <Layout>
-      <h1 style={{ fontSize: 34 }}>🏆 Community Eco-Leaderboard</h1>
+      <h1 style={{ fontSize: 42, display: 'flex', alignItems: 'center', gap: 14 }}>
+        <Trophy size={38} /> Community Eco-Leaderboard
+      </h1>
       <p style={{ color: 'var(--text-muted)', marginTop: 12, fontSize: 16, marginBottom: 28 }}>
         Compete against classmates and community members using gamification metrics.
       </p>

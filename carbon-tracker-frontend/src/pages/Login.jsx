@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../api';
+import { Leaf, KeyRound } from 'lucide-react';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -24,14 +25,18 @@ export default function Login() {
 
   return (
     <div style={{ minHeight: '100vh', padding: '80px 40px', maxWidth: 760, margin: '0 auto' }}>
-      <h1 style={{ fontSize: 42 }}>🌱 Smart Carbon Footprint Tracker</h1>
+      <h1 style={{ fontSize: 42, display: 'flex', alignItems: 'center', gap: 14 }}>
+        <Leaf size={38} /> Smart Carbon Footprint Tracker
+      </h1>
       <p style={{ color: 'var(--text-muted)', fontSize: 20, marginTop: 16 }}>
         Final Project Defense Prototype
       </p>
 
       <hr />
 
-      <h2 style={{ fontSize: 28, marginBottom: 24 }}>🔑 Sign In</h2>
+      <h2 style={{ fontSize: 28, marginBottom: 24, display: 'flex', alignItems: 'center', gap: 10 }}>
+        <KeyRound size={24} /> Sign In
+      </h2>
 
       <form onSubmit={handleSubmit}>
         <label className="label">Email Address</label>

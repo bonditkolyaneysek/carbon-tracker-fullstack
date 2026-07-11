@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import api from '../api';
 import Layout from '../components/Layout';
 import { PieChart, Pie, Cell, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts';
+import { BarChart3 } from 'lucide-react';
+import { Leaf } from 'lucide-react';
 
 export default function Dashboard() {
   const [user, setUser] = useState(null);
@@ -38,7 +40,9 @@ export default function Dashboard() {
 
   return (
     <Layout>
-      <h1 style={{ fontSize: 34 }}>📊 Executive Carbon Dashboard</h1>
+      <h1 style={{ fontSize: 42, display: 'flex', alignItems: 'center', gap: 14 }}>
+        <BarChart3 size={32} /> Executive Carbon Dashboard
+      </h1>
       <p style={{ color: 'var(--text-muted)', marginTop: 12, fontSize: 16 }}>
         Overview of calculated emissions, trends, and future predictive intelligence.
       </p>
@@ -52,7 +56,9 @@ export default function Dashboard() {
         <div>
           <div className="metric-label">Current Eco Score</div>
           <div className="metric-value">{user.eco_score}/100</div>
-          <span className="tag tag-positive">↑ 🌿 Tier: {user.eco_score > 75 ? 'Green Champion' : user.eco_score > 40 ? 'Eco Aware' : 'Getting Started'}</span>
+          <span className="tag tag-positive" style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+            ↑ <Leaf size={14} /> Tier: {user.eco_score > 75 ? 'Green Champion' : user.eco_score > 40 ? 'Eco Aware' : 'Getting Started'}
+          </span>
         </div>
         <div>
           <div className="metric-label">ML Projected Next Month (Prediction)</div>
