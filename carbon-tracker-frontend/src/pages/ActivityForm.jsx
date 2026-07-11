@@ -6,6 +6,7 @@ import { Car, Zap, ShoppingBag } from 'lucide-react';
 import { Calculator } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { LayoutDashboard } from 'lucide-react';
+import { LayoutDashboard, History } from 'lucide-react';
 
 const TABS = [
   { key: 'transport', icon: <Car />, label: 'Transport Log' },
@@ -23,11 +24,14 @@ export default function ActivityForm() {
   const [activityDate] = useState(new Date().toISOString().slice(0, 10));
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const [lastResult, setLastResult] = useState(null);
 
   const submit = async (payload) => {
     setError('');
+    setLastResult(null);
     try {
-      await api.post('/activities', payload);
+      const res = await api.post('/activities', payload);
+      setLastResult(res.data);
     } catch (err) {
       setError(err.response?.data?.message || 'Something went wrong.');
     }
@@ -131,6 +135,19 @@ export default function ActivityForm() {
 
       {error && <p style={{ color: 'var(--clay)', marginTop: 16 }}>{error}</p>}
 
+      {lastResult && (
+        <div className="card" style={{ marginTop: 20, marginBottom: 24 }}>
+          <span className="label">This Entry's Emission</span>
+          <div className="metric-value">{lastResult.activity.carbon_emitted} kg CO2</div>
+          <p style={{ color: 'var(--text-muted)', fontSize: 14, marginTop: 8 }}>
+            +{lastResult.points_earned} eco points earned
+            {lastResult.new_badges?.length > 0 && (
+              <> · New badge: {lastResult.new_badges.map(b => b.badge_name).join(', ')}</>
+            )}
+          </p>
+        </div>
+      )}
+
       <hr />
 
       <h2 style={{ fontSize: 22, marginBottom: 16 }}>Current Input Summary</h2>
@@ -155,13 +172,22 @@ export default function ActivityForm() {
         </tbody>
       </table>
 
-      <button
-        className="btn-block"
-        style={{ marginTop: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}
-        onClick={() => navigate('/dashboard')}
-      >
-        <LayoutDashboard size={16} /> View Executive Carbon Dashboard
-      </button>
+      <div style={{ display: 'flex', gap: 12, marginTop: 24 }}>
+        <button
+          className="btn-block"
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}
+          onClick={() => navigate('/dashboard')}
+        >
+          <LayoutDashboard size={16} /> View Dashboard
+        </button>
+        <button
+          className="btn-block"
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}
+          onClick={() => navigate('/history')}
+        >
+          <History size={16} /> View History
+        </button>
+      </div>
     </Layout>
   );
 }

@@ -6,9 +6,14 @@ import { Trash2 } from 'lucide-react';
 
 export default function History() {
   const [activities, setActivities] = useState([]);
+  const [dailyTotals, setDailyTotals] = useState([]);
   const [confirmTarget, setConfirmTarget] = useState(null); // activity id, or 'ALL'
 
-  const load = () => api.get('/activities').then((res) => setActivities(res.data));
+  const load = () => {
+    api.get('/activities').then((res) => setActivities(res.data));
+    api.get('/daily-totals').then((res) => setDailyTotals(res.data));
+    };
+    const today = new Date().toISOString().slice(0, 10);
   useEffect(() => { load(); }, []);
 
   const handleDelete = async () => {
@@ -26,6 +31,31 @@ export default function History() {
   return (
     <Layout>
       <h1 style={{ fontSize: 34 }}>Activity History</h1>
+      <h2 style={{ fontSize: 22, marginBottom: 16 }}>Daily Total Emissions</h2>
+        <table className="data-table" style={{ marginBottom: 40 }}>
+        <thead>
+            <tr><th>Date</th><th>Total CO2 (kg)</th></tr>
+        </thead>
+        <tbody>
+            {dailyTotals.map((d) => (
+            <tr key={d.activity_date}>
+                <td>
+                {d.activity_date}
+                {d.activity_date === today && (
+                    <span className="tag tag-positive" style={{ marginLeft: 10 }}>Today</span>
+                )}
+                </td>
+                <td>{parseFloat(d.total_co2).toFixed(3)}</td>
+            </tr>
+            ))}
+        </tbody>
+        </table>
+
+        {dailyTotals.length === 0 && (
+        <p style={{ color: 'var(--text-muted)', marginBottom: 40 }}>No daily totals yet — log an activity to start tracking.</p>
+        )}
+
+        <h2 style={{ fontSize: 22, marginBottom: 16 }}>Individual Activity Log</h2>
       <p style={{ color: 'var(--text-muted)', marginTop: 12, fontSize: 16, marginBottom: 28 }}>
         A complete record of every activity you've logged.
       </p>
