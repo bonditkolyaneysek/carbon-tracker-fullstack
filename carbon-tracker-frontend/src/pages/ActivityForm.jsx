@@ -42,7 +42,7 @@ export default function ActivityForm() {
         <Calculator size={30} /> Activity Carbon Tracker &amp; Calculator
       </h1>
       <p style={{ color: 'var(--text-muted)', marginTop: 12, fontSize: 16 }}>
-        Input daily parameters to compute instantaneous carbon offsets/emissions.
+        Input parameters to compute instantaneous carbon emissions.
       </p>
 
       <div className="tab-row" style={{ marginTop: 32 }}>
@@ -76,7 +76,7 @@ export default function ActivityForm() {
             <option>Electric</option>
             <option>Hybrid</option>
           </select>
-          <label className="label">Traveled Distance (Kilometers)</label>
+          <label className="label">Traveled Distance per day (Kilometers)</label>
           <NumberStepper value={distanceKm} onChange={setDistanceKm} />
           <button
             className="btn-block"
@@ -159,7 +159,7 @@ export default function ActivityForm() {
             <>
               <tr><td>Vehicle Category</td><td>{transportMode}</td></tr>
               <tr><td>Fuel Type</td><td>{transportFuel}</td></tr>
-              <tr><td>Distance (km)</td><td>{distanceKm}</td></tr>
+              <tr><td>Distance (km/day)</td><td>{distanceKm}</td></tr>
             </>
           )}
           {activeTab === 'electricity' && (

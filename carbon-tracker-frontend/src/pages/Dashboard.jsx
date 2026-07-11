@@ -49,7 +49,7 @@ export default function Dashboard() {
 
       <div className="metric-grid" style={{ marginTop: 32 }}>
         <div>
-          <div className="metric-label">Total Carbon Footprint</div>
+          <div className="metric-label">Total Carbon Footprint for today</div>
           <div className="metric-value">{total.toFixed(2)} kg CO₂e</div>
           <span className="tag tag-positive">↑ Target: &lt; 50 kg</span>
         </div>
@@ -61,8 +61,8 @@ export default function Dashboard() {
           </span>
         </div>
         <div>
-          <div className="metric-label">ML Projected Next Month (Prediction)</div>
-          <div className="metric-value">{prediction?.prediction ?? '—'} kg CO₂e</div>
+          <div className="metric-label">Next Month Prediction</div>
+          <div className="metric-value">{prediction?.prediction ?? '—'} kg CO₂e/day</div>
           <span className="tag tag-negative">↓ via {prediction?.source ?? 'n/a'}</span>
         </div>
       </div>
