@@ -1,9 +1,8 @@
+import { useState } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { LayoutDashboard, ClipboardList, Bot, Trophy, History, FlaskConical, LogOut, Sun, Moon, Leaf } from 'lucide-react';
+import { LayoutDashboard, ClipboardList, Bot, Trophy, History, FlaskConical, LogOut, Sun, Moon, Leaf, UserX, Menu, X } from 'lucide-react';
 import api from '../api';
 import { useTheme } from '../context/ThemeContext';
-import { useState } from 'react';
-import { UserX } from 'lucide-react';
 import ConfirmDialog from './ConfirmDialog';
 
 const NAV_ITEMS = [
@@ -20,34 +19,45 @@ export default function Layout({ children }) {
   const location = useLocation();
   const { theme, toggleTheme } = useTheme();
   const userEmail = localStorage.getItem('userEmail') || 'user@example.com';
-
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = async () => {
-    try {
-      await api.post('/logout');
-    } catch (e) {
-      // even if this fails, we still clear the local session and send them to login
-    }
+    await api.post('/logout');
     localStorage.removeItem('token');
-    localStorage.removeItem('userEmail');
     navigate('/login');
   };
 
   const handleDeleteAccount = async () => {
     try {
       await api.delete('/user');
-    } catch (e) {
-      // even if this fails, we still clear the local token and send them to login
-    }
+    } catch (e) {}
     localStorage.removeItem('token');
     localStorage.removeItem('userEmail');
     navigate('/login');
   };
 
+  const closeMenu = () => setMenuOpen(false);
+
   return (
     <div className="app-shell">
-      <aside className="sidebar">
+      <div className="mobile-topbar">
+        <button className="hamburger-btn" onClick={() => setMenuOpen(true)}>
+          <Menu size={24} />
+        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontWeight: 700 }}>
+          <Leaf size={18} /> EcoTrack
+        </div>
+        <div style={{ width: 24 }} />
+      </div>
+
+      <div className={`sidebar-backdrop ${menuOpen ? 'open' : ''}`} onClick={closeMenu} />
+
+      <aside className={`sidebar ${menuOpen ? 'open' : ''}`}>
+        <button className="hamburger-btn" style={{ alignSelf: 'flex-end', marginBottom: 12, display: menuOpen ? 'block' : 'none' }} onClick={closeMenu}>
+          <X size={20} />
+        </button>
+
         <div className="sidebar-brand" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <Leaf size={20} /> EcoTrack System
         </div>
@@ -61,9 +71,9 @@ export default function Layout({ children }) {
           {NAV_ITEMS.map((item) => {
             const Icon = item.icon;
             return (
-              <NavLink key={item.to} to={item.to}>
+              <NavLink key={item.to} to={item.to} onClick={closeMenu} className={({ isActive }) => isActive ? 'active' : ''}>
                 <span className={`nav-dot ${location.pathname === item.to ? 'active' : ''}`} />
-                <Icon size={16} style={{ marginRight: 6, verticalAlign: -3 }} />
+                <Icon size={16} />
                 {item.label}
               </NavLink>
             );
@@ -87,7 +97,9 @@ export default function Layout({ children }) {
           </button>
         </div>
       </aside>
+
       <main className="main-content">{children}</main>
+
       <ConfirmDialog
         open={showDeleteConfirm}
         title="Delete your account?"

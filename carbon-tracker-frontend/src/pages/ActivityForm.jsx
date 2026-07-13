@@ -7,6 +7,31 @@ import { Calculator } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { LayoutDashboard, History } from 'lucide-react';
 
+const TRANSPORT_FACTORS = {
+  'Walking': { 'None': 0 },
+  'Bicycle': { 'None': 0 },
+  'Motorcycle/Scooter': { 'Petrol (Gasoline)': 0.11367, 'Electric': 0.020 },
+  'Tuk Tuk, Grab, PassApp': { 'Petrol (Gasoline)': 0.11367, 'Electric': 0.077 },
+  'Car': { 'Petrol (Gasoline)': 0.308, 'Electric': 0.077, 'Hybrid': 0.176 },
+  'Bus': { 'Petrol (Gasoline)': 0.089, 'Electric': 0.040, 'Hybrid': 0.060 },
+};
+
+function estimateCo2(type, { billRiel, mode, fuel, distanceKm, plasticItems }) {
+  if (type === 'electricity') {
+    const dailyKwh = (parseFloat(billRiel || 0) / 610) / 30;
+    return dailyKwh * 0.18708;
+  }
+  if (type === 'transport') {
+    const factor = TRANSPORT_FACTORS[mode]?.[fuel] ?? 0.11367;
+    return parseFloat(distanceKm || 0) * factor;
+  }
+  if (type === 'plastic') {
+    const mass = parseInt(plasticItems || 0, 10) * 0.141;
+    return mass * 6.0;
+  }
+  return 0;
+}
+
 const TABS = [
   { key: 'transport', icon: <Car />, label: 'Transport Log' },
   { key: 'electricity', icon: <Zap />, label: 'Electricity Metrics' },
@@ -150,6 +175,13 @@ export default function ActivityForm() {
       <hr />
 
       <h2 style={{ fontSize: 22, marginBottom: 16 }}>Current Input Summary</h2>
+      const estimatedCo2 = estimateCo2(activeTab, {
+        billRiel,
+        mode: transportMode,
+        fuel: transportFuel,
+        distanceKm,
+        plasticItems,
+      });
       <table className="data-table">
         <thead>
           <tr><th>Field</th><th>Value</th></tr>
@@ -159,7 +191,7 @@ export default function ActivityForm() {
             <>
               <tr><td>Vehicle Category</td><td>{transportMode}</td></tr>
               <tr><td>Fuel Type</td><td>{transportFuel}</td></tr>
-              <tr><td>Distance (km/day)</td><td>{distanceKm}</td></tr>
+              <tr><td>Distance (km)</td><td>{distanceKm}</td></tr>
             </>
           )}
           {activeTab === 'electricity' && (
@@ -168,6 +200,10 @@ export default function ActivityForm() {
           {activeTab === 'plastic' && (
             <tr><td>Single-use Items</td><td>{plasticItems}</td></tr>
           )}
+          <tr>
+            <td style={{ fontWeight: 600 }}>Estimated CO2 (kg)</td>
+            <td style={{ fontWeight: 600, color: 'var(--leaf)' }}>{estimatedCo2.toFixed(3)}</td>
+          </tr>
         </tbody>
       </table>
 
@@ -177,7 +213,7 @@ export default function ActivityForm() {
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}
           onClick={() => navigate('/dashboard')}
         >
-          <LayoutDashboard size={16} /> View Dashboard
+          <LayoutDashboard size={16} /> View Executive Dashboard
         </button>
         <button
           className="btn-block"
