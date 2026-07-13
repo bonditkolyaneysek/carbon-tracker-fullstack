@@ -10,7 +10,7 @@ const NAV_ITEMS = [
   { to: '/log-activity', icon: ClipboardList, label: 'Log Carbon Activities' },
   { to: '/history', icon: History, label: 'Activity History' },
   { to: '/chatbot', icon: Bot, label: 'AI Chatbot' },
-  { to: '/leaderboard', icon: Trophy, label: 'Leaderboard & Gamification' },
+  { to: '/leaderboard', icon: Trophy, label: 'Leaderboard' },
   { to: '/model-transparency', icon: FlaskConical, label: 'Model Transparency' },
 ];
 
