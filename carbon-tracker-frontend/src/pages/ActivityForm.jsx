@@ -50,6 +50,14 @@ export default function ActivityForm() {
   const navigate = useNavigate();
   const [lastResult, setLastResult] = useState(null);
 
+  const estimatedCo2 = estimateCo2(activeTab, {
+    billRiel,
+    mode: transportMode,
+    fuel: transportFuel,
+    distanceKm,
+    plasticItems,
+  });
+
   const submit = async (payload) => {
     setError('');
     setLastResult(null);
@@ -175,13 +183,6 @@ export default function ActivityForm() {
       <hr />
 
       <h2 style={{ fontSize: 22, marginBottom: 16 }}>Current Input Summary</h2>
-      const estimatedCo2 = estimateCo2(activeTab, {
-        billRiel,
-        mode: transportMode,
-        fuel: transportFuel,
-        distanceKm,
-        plasticItems,
-      });
       <table className="data-table">
         <thead>
           <tr><th>Field</th><th>Value</th></tr>
